@@ -106,8 +106,10 @@ foreach (tema_campos() as $nombre => $meta) {
 
         case 'select':
             $val = (string)($_POST[$nombre] ?? '');
-            $validas = array_keys(tema_opciones($meta['opciones']));
-            if (!in_array($val, $validas, true)) $val = $defaults[$nombre];
+            // array_keys() puede devolver claves numéricas (ej. tamaño base "14"
+            // como int); se comparan como string para no fallar el strict check.
+            $validas = array_map('strval', array_keys(tema_opciones($meta['opciones'])));
+            if (!in_array($val, $validas, true)) $val = (string)$defaults[$nombre];
             tema_guardar($conn, $nombre, $val);
             $guardados++;
             break;
