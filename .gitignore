@@ -1,0 +1,7 @@
+# Basura de SO / editores
+Thumbs.db
+.DS_Store
+*.swp
+
+# Config local de Claude Code
+.claude/settings.local.json

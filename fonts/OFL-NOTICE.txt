@@ -1,0 +1,6 @@
+Los archivos .woff2 de esta carpeta (Barlow, Montserrat, Inter) se obtuvieron
+de Google Fonts y están licenciados bajo la SIL Open Font License 1.1 (OFL).
+Texto completo: https://openfontlicense.org/
+- Barlow      © The Barlow Project Authors
+- Montserrat  © The Montserrat Project Authors
+- Inter       © The Inter Project Authors
