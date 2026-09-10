@@ -1,0 +1,5 @@
+# El repo guarda todo con LF; los sistemas se despliegan en Linux.
+* text=auto eol=lf
+*.woff2 binary
+*.png binary
+*.ico binary
