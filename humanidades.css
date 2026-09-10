@@ -698,11 +698,13 @@ h3 { font-size: calc(18px * var(--heading-scale)); }
 }
 
 /* Membrete institucional para documentos imprimibles / PDF.
-   El markup y una copia inline de estas reglas (con el color ya resuelto, para
-   dompdf que no carga esta hoja) los emite theme/membrete.php. Acá se dejan con
-   var(--color-primary) para las páginas de impresión que sí cargan humanidades.css. */
+   El markup y una copia inline de estas reglas (con el color ya resuelto y el
+   position según el destino) los emite theme/membrete.php — esa copia inline es
+   la que manda. Acá se deja una base con var(--color-primary) y position:absolute
+   (bandas dentro del contenedor de cada página) para las páginas de impresión
+   web que carguen humanidades.css. */
 .fh-membrete-top, .fh-membrete-bottom {
-    position: fixed; left: 0; right: 0;
+    position: absolute; left: 0; right: 0;
     background: var(--color-primary, #990000);
     -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact;
 }

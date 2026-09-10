@@ -72,10 +72,21 @@ function membrete_logo(string $modo): string {
 }
 
 /**
- * <style> con las reglas del membrete (color ya resuelto: sirve tanto para
- * dompdf como para el navegador). En modo 'pdf' además emite la regla @page
- * con los márgenes que dejan lugar a las bandas.
- * $modo: 'pdf' (dompdf) | 'web' (navegador, por defecto).
+ * <style> con las reglas del membrete (color ya resuelto).
+ *
+ *   $modo 'pdf'  → para dompdf. Bandas con position:fixed (dompdf las repite en
+ *                  todas las páginas) + regla @page con los márgenes. Como dompdf
+ *                  ancla los fixed a la caja de contenido y no al papel, se
+ *                  compensa con offsets negativos. membrete_bandas('pdf') se
+ *                  emite UNA sola vez, al inicio del <body>.
+ *
+ *   $modo 'web'  → para impresión desde el navegador. Bandas con position:absolute
+ *                  DENTRO del contenedor de cada página (que debe ser
+ *                  position:relative y tener una página = un .acta-page). El
+ *                  navegador con position:fixed las pegaría al viewport en la
+ *                  vista previa; así en cambio cada página lleva su propio
+ *                  membrete tanto en pantalla como impreso.
+ *                  membrete_bandas('web') se emite dentro de cada contenedor.
  */
 function membrete_estilos(string $modo = 'web'): string {
     $c = membrete_color();
@@ -84,10 +95,12 @@ function membrete_estilos(string $modo = 'web'): string {
 
     if ($modo === 'pdf') {
         $page   = '@page { margin: ' . MEMBRETE_MARGEN_PDF . '; }';
+        $pos    = 'position: fixed;';
         $topPos = 'top: -' . MEMBRETE_OFFSET_TOP . ';';
         $botPos = 'bottom: -' . MEMBRETE_OFFSET_BOTTOM . ';';
     } else {
         $page   = '';
+        $pos    = 'position: absolute;';
         $topPos = 'top: 0;';
         $botPos = 'bottom: 0;';
     }
@@ -96,7 +109,7 @@ function membrete_estilos(string $modo = 'web'): string {
 <style>
     {$page}
     .fh-membrete-top, .fh-membrete-bottom {
-        position: fixed; left: 0; right: 0;
+        {$pos} left: 0; right: 0;
         background: {$c};
         -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact;
     }
@@ -111,8 +124,10 @@ CSS;
 }
 
 /**
- * Markup de las dos bandas. Emitir UNA sola vez, como primeros hijos del <body>.
- * $modo: 'pdf' (dompdf) | 'web' (navegador).
+ * Markup de las dos bandas.
+ *   $modo 'pdf' → emitir UNA sola vez, como primeros hijos del <body>.
+ *   $modo 'web' → emitir DENTRO de cada contenedor de página (position:relative),
+ *                 como primeros hijos de ese contenedor.
  */
 function membrete_bandas(string $modo = 'web'): string {
     $logo = membrete_logo($modo);
