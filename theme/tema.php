@@ -262,34 +262,44 @@ function tema_logo_fs(string $clave): string {
 /** Bloque <style> con los tokens semánticos pisados por la consola. */
 function tema_css_vars(): string {
     $t   = tema_todos();
+    $d   = tema_defaults();
     $f   = tema_fuente();
-    $esc = TEMA_ESCALAS[$t['escala_titulos']]['valor']   ?? '1';
-    $rad = TEMA_RADIOS[$t['radio_bordes']]               ?? TEMA_RADIOS['normal'];
-    $den = TEMA_DENSIDADES[$t['densidad']]['valor']      ?? '1';
-    $tam = preg_match('/^\d{2}$/', $t['tamano_base']) ? $t['tamano_base'] : '14';
+    $esc = TEMA_ESCALAS[$t['escala_titulos']]['valor'] ?? '1';
+    $rad = TEMA_RADIOS[$t['radio_bordes']]             ?? TEMA_RADIOS['normal'];
+    $den = TEMA_DENSIDADES[$t['densidad']]['valor']    ?? '1';
+    $tam = preg_match('/^\d{2}$/', (string)$t['tamano_base']) ? $t['tamano_base'] : '14';
 
-    $c = fn(string $k) => preg_match('/^#[0-9A-Fa-f]{6}$/', $t[$k]) ? $t[$k] : (tema_defaults()[$k]);
+    $color = function (string $k) use ($t, $d): string {
+        return preg_match('/^#[0-9A-Fa-f]{6}$/', (string)($t[$k] ?? '')) ? $t[$k] : $d[$k];
+    };
 
-    return ":root{"
-        . "--color-primary:{$c('color_primario')};"
-        . "--color-secondary:{$c('color_secundario')};"
-        . "--color-accent:{$c('color_acento')};"
-        . "--color-bg:{$c('color_fondo')};"
-        . "--color-surface:{$c('color_superficie')};"
-        . "--color-border:{$c('color_borde')};"
-        . "--color-text:{$c('color_texto')};"
-        . "--color-heading:{$c('color_titulos')};"
-        . "--color-success:{$c('color_exito')};"
-        . "--color-warning:{$c('color_advertencia')};"
-        . "--color-error:{$c('color_error')};"
-        . "--color-info:{$c('color_info')};"
-        . "--font-heading:{$f['titulos']};"
-        . "--font-body:{$f['texto']};"
-        . "--font-size-base:{$tam}px;"
-        . "--heading-scale:{$esc};"
-        . "--radius:{$rad['radius']};--radius-lg:{$rad['radius_lg']};"
-        . "--density:{$den};"
-        . "}";
+    $vars = [
+        '--color-primary'   => $color('color_primario'),
+        '--color-secondary' => $color('color_secundario'),
+        '--color-accent'    => $color('color_acento'),
+        '--color-bg'        => $color('color_fondo'),
+        '--color-surface'   => $color('color_superficie'),
+        '--color-border'    => $color('color_borde'),
+        '--color-text'      => $color('color_texto'),
+        '--color-heading'   => $color('color_titulos'),
+        '--color-success'   => $color('color_exito'),
+        '--color-warning'   => $color('color_advertencia'),
+        '--color-error'     => $color('color_error'),
+        '--color-info'      => $color('color_info'),
+        '--font-heading'    => $f['titulos'],
+        '--font-body'       => $f['texto'],
+        '--font-size-base'  => $tam . 'px',
+        '--heading-scale'   => $esc,
+        '--radius'          => $rad['radius'],
+        '--radius-lg'       => $rad['radius_lg'],
+        '--density'         => $den,
+    ];
+
+    $out = ':root{';
+    foreach ($vars as $k => $v) {
+        $out .= $k . ':' . $v . ';';
+    }
+    return $out . '}';
 }
 
 /**
