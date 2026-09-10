@@ -686,14 +686,32 @@ h3 { font-size: calc(18px * var(--heading-scale)); }
     table.data-table th, table.data-table td { padding: 8px 6px; }
 }
 
-/* ── 9) IMPRESIÓN (actas — imprimir_acta.php de Bajas) ─────────────────────── */
+/* ── 9) IMPRESIÓN ────────────────────────────────────────────────────────── */
 @media print {
     body * { visibility: hidden; }
     .acta-print, .acta-print * { visibility: visible; }
     .acta-print { position: absolute; top: 0; left: 0; width: 100%; margin: 0; padding: 0; }
+    .fh-membrete-top, .fh-membrete-top *,
+    .fh-membrete-bottom, .fh-membrete-bottom * { visibility: visible; }
     .no-print { display: none !important; }
     @page { size: A4; margin: 0; }
 }
+
+/* Membrete institucional para documentos imprimibles / PDF.
+   El markup y una copia inline de estas reglas (con el color ya resuelto, para
+   dompdf que no carga esta hoja) los emite theme/membrete.php. Acá se dejan con
+   var(--color-primary) para las páginas de impresión que sí cargan humanidades.css. */
+.fh-membrete-top, .fh-membrete-bottom {
+    position: fixed; left: 0; right: 0;
+    background: var(--color-primary, #990000);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact;
+}
+.fh-membrete-top    { top: 0; height: 7mm; }
+.fh-membrete-bottom { bottom: 0; height: 16mm; }
+.fh-membrete-bottom table { width: 100%; height: 16mm; border-collapse: collapse; }
+.fh-membrete-bottom td { border: none; vertical-align: middle; color: #fff; padding: 0 14mm; }
+.fh-membrete-dep  { font-size: 8.5px; line-height: 1.3; font-weight: bold; }
+.fh-membrete-logo { height: 11mm; }
 
 /* ── 10) UTILIDADES ──────────────────────────────────────────────────────── */
 .muted { color: var(--color-text-muted); }

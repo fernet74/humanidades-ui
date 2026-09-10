@@ -18,8 +18,42 @@ theme/
                               los tokens + <link>s en el <head>.
   configuracion.php           Vista de la consola (form + preview en vivo).
   configuracion_procesar.php  Guardado (colores, fuentes, logos, densidad…).
+  membrete.php                Membrete institucional para documentos imprimibles
+                              / PDF (bandas bordó + logo FH). Sirve para dompdf
+                              y para impresión desde el navegador.
   sql/configuracion.sql       CREATE TABLE clave/valor (idempotente).
 ```
+
+## Membrete de documentos imprimibles
+
+`theme/membrete.php` es el estándar único para cualquier documento que se
+imprima o exporte a PDF en los sistemas de la Facultad (actas de Bajas,
+listados de Inventario, PDF de planos, …). Dibuja dos bandas bordó a lo ancho
+de la página — una franja fina arriba y una banda abajo con el rótulo del
+departamento y el logo FH en blanco — con `position: fixed`, así se repiten en
+**todas** las páginas tanto en dompdf como al imprimir desde el navegador. No
+usa `background-image` (los navegadores no lo imprimen de forma confiable).
+
+```php
+require_once __DIR__ . '/ui/theme/membrete.php';
+
+// en el <head>:
+echo membrete_estilos();
+
+// como primeros elementos del <body>:
+echo membrete_bandas('pdf');   // 'pdf' = dompdf  ·  'web' = navegador
+```
+
+El contenido debe dejar lugar para las bandas:
+
+* **dompdf:** `@page { margin: <?= MEMBRETE_MARGEN_PDF ?> }` (constante exportada
+  por el módulo).
+* **navegador:** `padding-top` / `padding-bottom` en el contenedor de cada
+  página (p. ej. `.acta-page`).
+
+El color sale de `tema('color_primario')` y el rótulo de `tema('pdf_pie_texto')`.
+El logo de la banda es fijo (`logos/fh-logo-blanco.*` — PNG para dompdf, SVG
+para el navegador), no el logo configurable del header.
 
 ## Integrar en un sistema
 
