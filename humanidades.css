@@ -467,6 +467,16 @@ table.data-table tbody tr:hover { background: var(--color-primary-soft); }
 .form-group label .required { color: var(--color-error); margin-left: 2px; }
 .form-group label .optional { color: var(--color-text-muted); font-weight: 400; font-size: 11px; margin-left: 4px; }
 
+/* Vistas de detalle de solo lectura (p.ej. ver.php): mismo grid que los formularios,
+   pero mostrando etiqueta + valor en vez de un control editable. */
+.info-grid { display: grid; gap: 16px; }
+.info-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.info-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.info-grid-4 { grid-template-columns: repeat(4, 1fr); }
+.info-field { display: flex; flex-direction: column; gap: 4px; }
+.info-field label { font-size: 12px; font-weight: 600; color: var(--color-text-strong); }
+.info-field > div { font-size: 14px; color: var(--color-text); }
+
 .form-control {
     padding: calc(9px * var(--density)) 12px;
     border: 1px solid var(--color-border);
@@ -601,7 +611,7 @@ h3 { font-size: calc(18px * var(--heading-scale)); }
    Umbral 1023 (no 767) porque varios celulares con "sitio de escritorio" o
    escala del SO reducida reportan viewport CSS de 800-1000px. */
 @media (max-width: 1023px) {
-    .form-grid-3, .form-grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .form-grid-3, .form-grid-4, .info-grid-3, .info-grid-4 { grid-template-columns: repeat(2, 1fr); }
 
     .navbar-toggle { display: flex; }
     .navbar ul, .site-nav ul { display: none; flex-direction: column; width: 100%; }
@@ -653,7 +663,8 @@ h3 { font-size: calc(18px * var(--heading-scale)); }
     body { font-size: 17px; }
     .card-body { padding: 16px; }
     .form-section-body { padding: 14px; }
-    .form-grid, .form-grid-2, .form-grid-3, .form-grid-4 { grid-template-columns: 1fr; gap: 16px; }
+    .form-grid, .form-grid-2, .form-grid-3, .form-grid-4,
+    .info-grid, .info-grid-2, .info-grid-3, .info-grid-4 { grid-template-columns: 1fr; gap: 16px; }
     .form-group label { font-size: 15px; }
     .form-group label .optional { font-size: 13px; }
     .form-control, .search-bar select, .search-bar input { font-size: 17px; }
