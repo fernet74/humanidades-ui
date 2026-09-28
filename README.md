@@ -28,20 +28,37 @@ theme/
 
 `theme/membrete.php` es el estándar único para cualquier documento que se
 imprima o exporte a PDF en los sistemas de la Facultad (actas de Bajas,
-listados de Inventario, PDF de planos, …). Dibuja dos bandas bordó a lo ancho
-de la página — una franja fina arriba y una banda abajo con el rótulo del
-departamento y el logo FH en blanco — con `position: fixed`, así se repiten en
-**todas** las páginas tanto en dompdf como al imprimir desde el navegador. No
-usa `background-image` (los navegadores no lo imprimen de forma confiable).
+listados e informes de Inventario, PDF de planos, …). Dibuja dos bandas bordó
+a lo ancho de la página — una franja fina arriba y una banda abajo con el
+rótulo del departamento y el logo FH en blanco. No usa `background-image` (los
+navegadores no lo imprimen de forma confiable): son elementos reales del DOM,
+en **dos modos** con comportamiento distinto:
+
+* **`'pdf'`** (dompdf): bandas con `position: fixed` + una regla `@page` con
+  los márgenes (`MEMBRETE_MARGEN_PDF`) — dompdf las repite en **todas** las
+  páginas del PDF a partir de un único `membrete_bandas('pdf')` emitido al
+  inicio del `<body>`. Como dompdf ancla los `fixed` a la caja de contenido
+  (adentro de los márgenes de `@page`), no al borde del papel, se compensan
+  con offsets negativos iguales a esos márgenes (`MEMBRETE_OFFSET_TOP/BOTTOM`).
+* **`'web'`** (impresión desde el navegador, `window.print()`): bandas con
+  `position: absolute`, **dentro de cada contenedor de página** (que debe ser
+  `position: relative` — una página = un contenedor, p. ej. `.acta-page`), así
+  que `membrete_bandas('web')` se emite en el loop, una vez por página. Con
+  `position: fixed` el navegador las clava al viewport en la vista previa (se
+  ven flotando en los bordes de la ventana en vez de en cada hoja) — por eso
+  `'web'` usa `absolute` y no `fixed` como `'pdf'`.
 
 ```php
 require_once __DIR__ . '/ui/theme/membrete.php';
 
 // en el <head>:
-echo membrete_estilos();
+echo membrete_estilos('pdf');   // 'pdf' = dompdf  ·  'web' = navegador (default)
 
-// como primeros elementos del <body>:
-echo membrete_bandas('pdf');   // 'pdf' = dompdf  ·  'web' = navegador
+// 'pdf': UNA sola vez, como primeros elementos del <body>.
+echo membrete_bandas('pdf');
+
+// 'web': dentro de CADA contenedor de página, en el loop que arma las páginas.
+echo membrete_bandas('web');
 ```
 
 El contenido debe dejar lugar para las bandas:
@@ -54,6 +71,24 @@ El contenido debe dejar lugar para las bandas:
 El color sale de `tema('color_primario')` y el rótulo de `tema('pdf_pie_texto')`.
 El logo de la banda es fijo (`logos/fh-logo-blanco.*` — PNG para dompdf, SVG
 para el navegador), no el logo configurable del header.
+
+## Vistas de detalle de solo lectura
+
+Para pantallas tipo "ver" (el detalle de un registro, sin edición — p. ej.
+`ver.php` en Inventario de Red o Bajas Patrimoniales), `humanidades.css` trae
+`.info-grid`/`.info-field`: mismo grid que `.form-grid`/`.form-group` (usados
+en los formularios de alta/edición) pero para mostrar etiqueta + valor en vez
+de un control editable.
+
+```html
+<div class="info-grid info-grid-3">
+    <div class="info-field"><label>IP</label><div><code>10.0.1.50</code></div></div>
+    <div class="info-field"><label>Equipo</label><div>PC-ADMIN-01</div></div>
+</div>
+```
+
+`info-grid-2` / `info-grid-3` / `info-grid-4` (como `form-grid-*`) fijan la
+cantidad de columnas y colapsan a menos en pantallas chicas.
 
 ## Integrar en un sistema
 
