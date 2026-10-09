@@ -61,7 +61,7 @@
     --color-primary-active:  color-mix(in srgb, var(--color-primary) 78%, black);
     --color-primary-soft:    color-mix(in srgb, var(--color-primary) 6%,  white);
     --color-primary-contrast:#FFFFFF;
-    --color-secondary:      var(--h-blue-600);
+    --color-secondary:      var(--h-gold-500);
     --color-accent:         var(--h-gold-500);
 
     /* Superficies y texto */

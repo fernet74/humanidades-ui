@@ -158,7 +158,7 @@ function tema_defaults(): array {
         'favicon'          => '',
 
         'color_primario'   => '#821632',
-        'color_secundario' => '#0F6499',
+        'color_secundario' => '#E99C00',
         'color_acento'     => '#E99C00',
 
         'color_fondo'      => '#F8F9FA',
