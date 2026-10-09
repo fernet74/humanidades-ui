@@ -157,9 +157,9 @@ function tema_defaults(): array {
         'subtitulo'        => TEMA_SUBTITULO_DEFECTO,
         'favicon'          => '',
 
-        'color_primario'   => '#990000',
+        'color_primario'   => '#821632',
         'color_secundario' => '#0F6499',
-        'color_acento'     => '#17E5C6',
+        'color_acento'     => '#E99C00',
 
         'color_fondo'      => '#F8F9FA',
         'color_superficie' => '#FFFFFF',
@@ -169,7 +169,7 @@ function tema_defaults(): array {
 
         'color_exito'       => '#10B981',
         'color_advertencia' => '#F59E0B',
-        'color_error'       => '#EF4444',
+        'color_error'       => '#E51717',
         'color_info'        => '#0F6499',
 
         'fuente_combo'     => 'barlow_montserrat',

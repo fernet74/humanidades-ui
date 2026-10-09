@@ -16,5 +16,5 @@ CREATE TABLE IF NOT EXISTS configuracion (
 -- Ejemplo de override manual (opcional):
 --   INSERT INTO configuracion (clave, valor) VALUES
 --     ('nombre_sistema', 'Inventario de Red'),
---     ('color_primario', '#990000')
+--     ('color_primario', '#821632')
 --   ON DUPLICATE KEY UPDATE valor = VALUES(valor);

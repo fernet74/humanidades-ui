@@ -21,8 +21,7 @@
 :root {
     /* Bordo institucional Humanidades */
     --h-red-500:  #B31E42;
-    --h-red-600:  #990000;   /* color primario oficial (Manual de Imagen FH) */
-    --h-red-700:  #821632;
+    --h-red-700:  #821632;   /* color primario oficial (Manual de Imagen FH) */
     --h-red-800:  #6B1027;
     --h-red-900:  #5C0F24;
     --h-red-050:  #FDF2F5;
@@ -30,7 +29,8 @@
     /* Azules institucionales UNMdP */
     --h-blue-900: #04304D;   /* textos / títulos */
     --h-blue-600: #0F6499;   /* enlaces / info */
-    --h-cyan-400: #17E5C6;   /* foco / highlights */
+    --h-cyan-400: #17E5C6;   /* paleta adicional */
+    --h-gold-500: #E99C00;   /* resalte / acento */
 
     /* Grises de interfaz */
     --h-gray-050: #F8F9FA;
@@ -47,7 +47,7 @@
     --h-green-700:  #065F46;
     --h-amber-500:  #F59E0B;
     --h-amber-800:  #92400E;
-    --h-rose-500:   #EF4444;
+    --h-rose-500:   #E51717;
     --h-rose-700:   #991B1B;
 }
 
@@ -56,13 +56,13 @@
       se derivan con color-mix() para que sigan al color elegido.               */
 :root {
     /* Marca */
-    --color-primary:        var(--h-red-600);
+    --color-primary:        var(--h-red-700);
     --color-primary-hover:   color-mix(in srgb, var(--color-primary) 85%, white);
     --color-primary-active:  color-mix(in srgb, var(--color-primary) 78%, black);
     --color-primary-soft:    color-mix(in srgb, var(--color-primary) 6%,  white);
     --color-primary-contrast:#FFFFFF;
     --color-secondary:      var(--h-blue-600);
-    --color-accent:         var(--h-cyan-400);
+    --color-accent:         var(--h-gold-500);
 
     /* Superficies y texto */
     --color-bg:             var(--h-gray-050);
@@ -716,7 +716,7 @@ h3 { font-size: calc(18px * var(--heading-scale)); }
    web que carguen humanidades.css. */
 .fh-membrete-top, .fh-membrete-bottom {
     position: absolute; left: 0; right: 0;
-    background: var(--color-primary, #990000);
+    background: var(--color-primary, #821632);
     -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact;
 }
 .fh-membrete-top    { top: 0; height: 7mm; }
