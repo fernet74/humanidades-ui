@@ -48,7 +48,7 @@ const MEMBRETE_OFFSET_BOTTOM = '20mm';
 /** Color de las bandas: el primario del tema, o el bordó institucional por defecto. */
 function membrete_color(): string {
     $c = tema('color_primario');
-    return preg_match('/^#[0-9A-Fa-f]{6}$/', $c) ? $c : '#990000';
+    return preg_match('/^#[0-9A-Fa-f]{6}$/', $c) ? $c : '#821632';
 }
 
 /** Las dos líneas del rótulo de la izquierda de la banda inferior. */
