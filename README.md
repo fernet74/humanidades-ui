@@ -207,8 +207,8 @@ títulos) · Colores de estado (éxito, advertencia, error, info) · Tipografía
 (combo, tamaño base, escala de títulos) · Forma y densidad (radio de bordes,
 densidad) · Logos (header, footer, PDF — preset institucional o subida) ·
 Iconos (set FA por defecto) · PDF (pie, mostrar logo) · Pie institucional
-(email, dirección). Todo con vista previa en vivo y botón "Restaurar de
-fábrica".
+(email, dirección). Todo con vista previa en vivo y botón "Restaurar" (en el
+color primario), que vuelve a los valores predeterminados.
 
 ## Fuentes
 
