@@ -136,9 +136,9 @@ if (function_exists('layout_header')) {
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary"><i class="<?= $icls ?> fa-save"></i> Guardar cambios</button>
                     <a href="index.php" class="btn btn-secondary"><i class="<?= $icls ?> fa-times"></i> Cancelar</a>
-                    <button type="submit" name="restaurar" value="1" class="btn btn-danger" style="margin-left:auto;"
-                            onclick="return confirm('¿Restaurar TODA la configuración de tema a los valores de fábrica del Manual de Imagen?');">
-                        <i class="<?= $icls ?> fa-rotate-left"></i> Restaurar de fábrica
+                    <button type="submit" name="restaurar" value="1" class="btn btn-primary" style="margin-left:auto;"
+                            onclick="return confirm('¿Restaurar la configuración de tema a los valores predeterminados? Se reemplazan colores, tipografía, logos y pie.');">
+                        <i class="<?= $icls ?> fa-rotate-left"></i> Restaurar
                     </button>
                 </div>
             </form>
